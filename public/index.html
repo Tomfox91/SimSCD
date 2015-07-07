@@ -1,0 +1,195 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>SimSCD</title>
+
+        <link rel="stylesheet" href="css/vendor/normalize.css" />
+        <link rel="stylesheet" href="css/vendor/foundation.css" />
+        <link rel="stylesheet" type="text/css" href="css/my.css" />
+
+        <script src="js/vendor/modernizr.js"></script>
+
+    </head>
+
+    <body>
+
+        <div id='big-container'>
+        
+            <div id='splash'>
+                <div id='splashdraw'></div>
+                <div id='splashtext'>
+                    <p>Loading the City...</p>
+                </div>
+                <div id='splashbutton' class='hide'>
+                    <button id='btnReconnect' class='button'>Reconnect</button>
+                </div>
+            </div>
+
+            <div class='control_panel'>
+                <div>
+                    <p>Current time: <span id="current_time"></span></p>
+                </div>
+                
+                <div id='c_selected'>
+                    <button class="right hide" id="removeSelection">&times;</button>
+                    <button class="right hide" id="gotoSelection">&#9678;</button>
+                    <button class="right"      id="manualThingSelect" data-reveal-id="manualThingSelectModal">&#9997;</button>
+                    <p>Currently selected:</p> 
+                    <i id='e_selected'>Nothing!</i>
+                    <br>
+                    <small>Type: <i id='e_type'>No type</i></small>
+                </div>
+                <hr>
+                <div id='c_control'>
+                    <p>God mode:</p>
+                    <button id="jamButton" class="button tiny"><img src='img/worker5.png' /></button>
+                    <a href="#" data-reveal-id="subModal" class="button tiny "><img src='img/rss24.png' /></a>
+                    <a href="#" data-reveal-id="shutModal" class="button tiny "><img src="img/shutdown.svg" /></a>              
+
+                    <p>Jam duration (seconds)</p>
+                    <div class="range-slider" data-slider data-options="display_selector: #jamtime; start: 1; end: 120;"> 
+                        <span class="range-slider-handle" id='jamtime'></span> 
+                        <span class="range-slider-active-segment"></span>
+                    </div>
+
+                    <p>Jam severity (vehicles)</p>
+                    <div class="range-slider" data-slider data-options="display_selector: #jamVehFactor; start: 2; end: 10;"> 
+                        <span class="range-slider-handle" id='jamVehFactor'></span> 
+                        <span class="range-slider-active-segment"></span> 
+                        <input type="hidden">
+                    </div>
+
+                    <p>Jam severity (pedestrians)</p>
+                    <div class="range-slider" data-slider data-options="display_selector: #jamPedFactor; start: 2; end: 10;"> 
+                        <span class="range-slider-handle" id='jamPedFactor'></span> 
+                        <span class="range-slider-active-segment"></span> 
+                        <input type="hidden">
+                    </div>
+                </div>
+                <hr>
+                <div id='c_contained'>
+                    <p>Contained entities:</p>
+                    <div id='c_entities'></div>
+                </div>
+            </div>
+
+            <div id='left_panel' class="fullheight nopadding">
+                <div id="container" class='citycontainer fullheight'>
+
+                    <svg class="svg-content viewport fullheight fullwidth" id='cityView'>
+                        <g id="areas"></g>
+                        <g id="roads"></g>
+                        <g id="lanes"></g>
+                        <g id="sideConts"></g>
+                        <g id="sidewalks"></g>
+                        <g id="temproadoverlay"></g>
+                        <g id="roadoverlay"></g>
+                        <g id="crosses"></g>
+                        <g id="vehicles"></g>
+                        <g id="pedestrians"></g>
+                    </svg>
+
+                </div>
+            </div>
+            
+            <div id="subModal" class="reveal-modal" data-reveal>
+                <h2>Manage Subscriptions</h2>
+                <div id='areascontainer'></div>
+                <a class="close-reveal-modal">&#215;</a>
+            </div>
+
+            <div id="shutModal" class="reveal-modal tiny" data-reveal>
+                <h2>Shutdown server</h2>
+                <a class="close-reveal-modal">&#215;</a>
+                <button id="shutdownButton" class="button alert">Shutdown</button>
+            </div>
+            
+            <div id="manualThingSelectModal" class="reveal-modal" data-reveal>
+                <h2>Manual thing selection</h2>
+                <form>
+                    <div class="row">
+                        <div class="large-5 columns">
+                            <label>Id:
+                                <input type="text" id="mtsIdSel" />
+                            </label>
+                        </div>
+                        <div class="large-5 columns">
+                            <label>Type:</label>
+                            <input type="radio" name="mtsTSel" value="pedestrian" id="mtsPedestrian" checked="true"><label for="mtsPedestrian">Pedestrian</label>
+                            <input type="radio" name="mtsTSel" value="car" id="mtsCar"><label for="mtsCar">Car</label>
+                            <input type="radio" name="mtsTSel" value="bus" id="mtsBus"><label for="mtsBus">Bus</label>
+                        </div>
+                        <div class="large-2 columns">
+                            <button id='mtsSelect' class='button'>Go</button>
+                        </div>
+                    </div>
+                </form>
+                <a class="close-reveal-modal">&#215;</a>
+            </div>
+
+        </div>
+        
+
+        <!-- Dependencies -->
+        <script src='js/d3.v3.min.js'></script>
+        <script src="js/vendor/jquery.js"></script>
+        <script src="js/foundation.min.js"></script>
+        <script src="js/svg-pan-zoom.min.js"></script>
+        <script src="js/raphael.js"></script>
+        <script src="js/lazylinepainter.js"></script>
+
+
+        <!-- Our JS code -->
+        <script src='client/init.js'></script>
+        <script src='client/utils.js'></script>
+
+        <script src='client/update/roads.js'></script>
+        <script src='client/update/lanes.js'></script>
+        <script src='client/update/crosses.js'></script>
+        <script src='client/update/cars.js'></script>
+        <script src='client/update/pedestrians.js'></script>
+        <script src='client/update/updManager.js'></script>
+        <script src="client/update/unsubscribe.js"></script>
+        
+        <script src='client/messages/areas.js'></script>
+        <script src='client/messages/contained.js'></script>
+        <script src='client/messages/cross.js'></script>
+        <script src='client/messages/events/car/cross.js'></script>
+        <script src='client/messages/events/car/lane.js'></script>
+        <script src='client/messages/events/car/park.js'></script>
+        <script src='client/messages/events/changeLights.js'></script>
+        <script src='client/messages/events/exitedArea.js'></script>
+        <script src='client/messages/events/jams.js'></script>
+        <script src='client/messages/events/pedestrian/build.js'></script>
+        <script src='client/messages/events/pedestrian/bus.js'></script>
+        <script src='client/messages/events/pedestrian/busStop.js'></script>
+        <script src='client/messages/events/pedestrian/checkIncumbent.js'></script>
+        <script src='client/messages/events/pedestrian/container.js'></script>
+        <script src='client/messages/events/pedestrian/cross.js'></script>
+        <script src='client/messages/events/pedestrian/park.js'></script>
+        <script src='client/messages/events/pedestrian/sidewalk.js'></script>
+        <script src='client/messages/events/serverShutDown.js'></script>
+        <script src='client/messages/events/subscribeConfirmation.js'></script>
+        <script src='client/messages/lane.js'></script>
+        <script src='client/messages/road.js'></script>
+
+        <script src="client/clock.js"></script>
+        <script src="client/splash.js"></script>
+        <script src="client/webSocket.js"></script>
+        <script src='client/controlPanel.js'></script>
+        <script src='client/listeners.js'></script>
+
+        <!-- Init code -->
+        <script>
+            $(document).ready(function () {
+                $(document).foundation();
+                splashScreen();
+            });
+        </script>
+
+    </body>
+</html>

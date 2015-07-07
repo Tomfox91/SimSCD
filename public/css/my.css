@@ -1,0 +1,190 @@
+/* SVG */
+
+.areaPlaceholder {
+    fill: blue;
+    stroke: black;
+}
+
+.strada {
+	stroke-width: 0.05;
+	stroke: gray;
+}
+
+.sidewalk {
+    stroke-width: 0.03;
+    stroke: gray;
+}
+
+.corsia {
+	stroke: #AAA;
+}
+
+.corsiabus {
+	stroke: #FFA;
+}
+
+.incrocio {
+	fill: white;
+	stroke-width: 0.05;
+	stroke: black;
+}
+
+.roadoverlayjammed {
+    stroke-opacity: 0;
+    fill-opacity: .42;
+    fill: red;
+}
+
+.parkingLot {
+    fill: grey;
+    fill-opacity: .315;
+}
+
+.building {
+    fill: #E87E15;
+    fill-opacity: .315;
+}
+
+.busStop {
+    fill: green;
+    fill-opacity: .315;
+}
+
+.overlayselected {
+    fill-opacity: .42;
+    fill: cyan;
+}
+
+.incrocio.overlayselected {
+    fill-opacity: 1;
+    fill: #AFF;
+}
+
+.car {
+	fill: red;
+}
+.bus {
+    fill: green;
+}
+
+.pedone {
+	fill: blue;
+}
+
+.selectedThing {
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    animation-direction: alternate;
+    animation-name: glow;
+    stroke-opacity: .7;
+}
+
+.car.selectedThing {
+    stroke: red;
+}
+.bus.selectedThing {
+    stroke: green;
+}
+.pedone.selectedThing {
+    stroke: blue;
+}
+
+@keyframes glow {
+  from { stroke-width: .2; }
+  to   { stroke-width: 1; }
+}
+
+
+.semaforo {
+	fill: rgba(0,0,0,0);
+}
+
+
+
+
+
+/* HTML */
+.fullheight {
+    overflow-x: hidden; 
+    height: 100vh;
+}
+
+.fullwidth {
+    overflow-y: hidden; 
+    width: 100%
+}
+
+.nopadding {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.citycontainer {
+    overflow: hidden;
+}
+
+#left_panel {
+    margin-right: 420px;
+}
+
+.control_panel {
+    float: right;
+    min-height: 100vh;
+    height: 100vh;
+    width: 420px;
+    padding: 1em;
+    overflow-y: scroll;
+    border-left-width: 1px;
+    border-left-color: #DDD;
+    border-left-style: solid;
+}
+
+.range-slider-handle {
+    padding: 3px 0 0 5px;
+    color: #FFF;
+}
+
+#c_selected {
+    min-height: 5%;
+}
+
+#c_selected button {
+    margin-left: .5em;
+    height: 50px;
+    width: 75px;
+    line-height: 0;
+} #c_selected button#removeSelection {
+    font-size: 150%;
+} #c_selected button#gotoSelection {
+    font-size: 150%;
+} #c_selected button#manualThingSelect {
+    font-size: 250%;
+}
+
+/*
+#c_contained {
+    min-height: 30%;
+}
+*/
+
+#c_control {
+    min-height: 30%;
+} #c_control .button img {
+    height: 32px;
+}
+
+#splash {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 42;
+    background: rgba(255,255,255,1);
+    text-align: center;
+}
+
+#splashdraw {
+    margin: 10% auto;
+}

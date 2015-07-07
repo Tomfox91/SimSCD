@@ -1,0 +1,8 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+GET     /ws                         controllers.Socket.ws()
+
+GET     /*file                      controllers.Assets.at(path="/public", file)
+GET     /                           controllers.Default.redirect(to = "index.html")
